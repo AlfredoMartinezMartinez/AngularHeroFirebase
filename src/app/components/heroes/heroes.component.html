@@ -20,7 +20,8 @@
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Casa</th>
-            <th scope="col">Opciones</th>
+            <th scope="col">Bio</th>
+            <th class="text-right" scope="col">Opciones</th>
           </tr>
         </thead>
         <tbody>
@@ -29,10 +30,25 @@
             <td>{{heroes[k].nombre}}</td>
             <td>{{heroes[k].casa}}</td>
             <td>{{heroes[k].bio}}</td>
+            <td class="text right " align="right">
+              <button [routerLink]="['/heroe',k]"
+                      type="button" class="btn btn-outline-success" name="button">Editar</button>
+              <button (click)="borrarHeroe(k)"
+                      type="button" class="btn btn-outline-danger" name="button">Eliminar</button>
+            </td>
           </tr>
         </tbody>
 
       </table>
+      <div *ngIf="(heroes |keys).length===0 && !loading"
+        class="alert alert-info" role="alert">
+        <strong>No hay </strong>registros que mostrar
+      </div>
+
+      <div *ngIf="loading" 
+          class="alert alert-warning" role="alert">
+        <strong>Cargand...</strong> por favor espere
+      </div>
 
     </div>
 

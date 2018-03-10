@@ -8,11 +8,13 @@ import {HeroesService}  from "../../services/heroes.service";
 })
 export class HeroesComponent implements OnInit {
   heroes:any[]=[];
+  loading:boolean = true;
 
   constructor(private _heroesService:HeroesService) {
     //regresara los datos del servicio metodo getHeroes
     this._heroesService.getHeroes().subscribe(data =>{
-      console.log(data);
+      // console.log(data);
+
       /*convertir arreglo en datos 1 manera
       for( let key$ in data){
         // console.log(data[key$]);
@@ -26,6 +28,9 @@ export class HeroesComponent implements OnInit {
 
       //otra manera con pipe
       this.heroes= data;
+      this.loading=false;
+      //ralentizar loadiong
+      // setTimeout(()=> this.loading=false,3000);
 
   })
 
@@ -33,6 +38,18 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  borrarHeroe(key$:string){
+    this._heroesService.borrarHeroe(key$).subscribe(respuesta=>{
+      if(respuesta){
+      console.log(respuesta);
+    }else{
+      //todo bien
+      delete this.heroes[key$];
+    }
+
+    })
   }
 
 }
