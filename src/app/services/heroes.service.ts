@@ -7,7 +7,7 @@ import 'rxjs/Rx';
 export class HeroesService {
 
   heroesUrl:string ="https://heroresapp-56636.firebaseio.com/heroes.json"
-  heroeUrl:string ="https://heroresapp-56636.firebaseio.com/heroes/"
+  heroeUrl:string ="https://heroresapp-56636.firebaseio.com/heroes"
 
   constructor(private http:Http) { }
 
@@ -30,13 +30,23 @@ export class HeroesService {
       'Content-Type':'application/json'
     });
 
-    let url = `${ this.heroeUrl }/$ { key$ }.json`;
+    let url = `${ this.heroeUrl }/${ key$ }.json`;
+    // let url = `${ this.heroeUrl }/${ key$ }.json`;
     return this.http.put(url,body,{headers}).map(res=>{
       console.log(res.json());
       return res.json();
     })
   }
 
+  getHeroe(key$:string){
+      let url = `${ this.heroeUrl }/${ key$ }.json`;
+      return this.http.get(url).map(res=>res.json());
+  }
+
+  getHeroes(){
+
+      return this.http.get(this.heroesUrl).map(res=>res.json());
+  }
 
 
 }
